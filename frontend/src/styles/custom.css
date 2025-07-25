@@ -1,0 +1,14 @@
+body {
+    background: #f8f9fa;
+  }
+  .card {
+    margin-top: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  input.form-control {
+    border-radius: 8px 0 0 8px;
+  }
+  .btn-primary {
+    border-radius: 0 8px 8px 0;
+  }
