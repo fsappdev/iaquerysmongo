@@ -1,12 +1,10 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const { GoogleGenAI } = require('@google/genai');
-//apagar ⬇️
 const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
 
 class GeminiService {
   constructor() {
     //this.genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    this.genAI = new GoogleGenAI(process.env.GEMINI_API_KEY);
     //this.model = this.genAI.getGenerativeModel({ model: "gemini-pro" });
     //this.genAI = new GoogleGenAI(process.env.GEMINI_API_KEY);
     //this.model = this.genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
@@ -27,18 +25,15 @@ class GeminiService {
         }
     `;
     //const result = await this.models.generateContent(prompt);
-    //const result = await this.models.generateContent({model: "gemini-2.5-pro", contents: prompt});
-    const result = await this.genAI.models.generateContent({model: "gemini-2.5-pro", contents: prompt});
-    //const response = await result;
-    //const text = response.text;
-    console.log("resultado 📽️ 📊 MQ ",result);
-    const text = result.text;
+    const result = await this.models.generateContent({model: "gemini-2.5-pro", contents: prompt});
+    const response = await result.response;
+    const text = response.text();
     const jsonMatch = text.match(/{[\s\S]*}/);
     if (jsonMatch) return JSON.parse(jsonMatch[0]);
     throw new Error('No se pudo generar una consulta válida');
   }
 
-  /* async generateMongoQueryNew(naturalQuery, schema){
+  async generateMongoQueryNew(naturalQuery, schema){
     const prompt = `
         Eres un experto en MongoDB. Convierte la siguiente consulta en lenguaje natural a una consulta MongoDB.
         ESQUEMA: ${JSON.stringify(schema)}
@@ -56,7 +51,7 @@ class GeminiService {
     const jsonMatch = text.match(/{[\s\S]*}/);
     if (jsonMatch) return JSON.parse(jsonMatch[0]);
     throw new Error('No se pudo generar una consulta válida');
-  } */
+  }
 
   async formatResponse(queryResult, originalQuery, mongoQuery) {
     const prompt = `
@@ -73,12 +68,9 @@ class GeminiService {
         }
     `;
     const result = await ai.models.generateContent({model: "gemini-2.5-pro", contents: prompt});
-    console.log("resultado FR 📽️ 📊 ",result);
-    const response = await result.text;
-    console.log("response 📽️ 📊 ",response);
+    //const response = await result.text;
     //const text = response.text();
-    //console.log("text 📽️ 📊 ",text);
-    const jsonMatch = response.match(/{[\s\S]*}/);
+    const jsonMatch = result.match(/{[\s\S]*}/);
     if (jsonMatch) return JSON.parse(jsonMatch[0]);
     return {
       summary: "Consulta ejecutada",

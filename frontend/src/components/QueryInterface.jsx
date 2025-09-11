@@ -9,6 +9,7 @@ export default function QueryInterface({ onResponse }) {
     e.preventDefault();
     setLoading(true);
     const response = await sendNaturalQuery(query);
+    console.log("response 📽️ 📊 ",response);
     onResponse(response);
     setLoading(false);
   };

@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const database = require('../config/database');
 const geminiService = require('../services/geminiService');
+const { GoogleGenAI } = require('@google/genai');
+const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
 
 router.post('/natural-query', async (req, res) => {
   try {
@@ -9,11 +11,11 @@ router.post('/natural-query', async (req, res) => {
     if (!query) return res.status(400).json({ success: false, error: 'Consulta vacía' });
 
     const schema = await database.getCollectionsSchema();
-    console.log("schema 😣 ",schema);
+    //console.log("schema 😣 ",schema);
     const mongoQueryInfo = await geminiService.generateMongoQuery(query, schema);
-    console.log("mongoQueryInfo 😣⚖️ ",mongoQueryInfo);
+    //console.log("mongoQueryInfo 😣⚖️ ",mongoQueryInfo);
     const db = database.getDb();
-    console.log("db 😣 ",db);
+    //console.log("db 😣 ",db);
     const collection = db.collection(mongoQueryInfo.mongoQuery.collection);
     console.log("collection 😣 ",collection);
 
@@ -34,10 +36,10 @@ router.post('/natural-query', async (req, res) => {
       default:
         throw new Error('Operación no soportada');
     }
-    console.log("result 📽️ 📊 ",result);
+    console.log("result 📽️ 📊 FINAL ",result);
     const formattedResponse = await geminiService.formatResponse(result, query, mongoQueryInfo.mongoQuery);
-    console.log("formattedResponse �️ 📊 ",formattedResponse);
-    res.json({
+    console.log("formattedResponse �️ 📊 FORMATEADO",formattedResponse);
+    res.status(200).json({
       success: true,
       data: {
         originalQuery: query,
@@ -52,5 +54,19 @@ router.post('/natural-query', async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 });
+
+router.post('/consulta', async (req, res) => {
+    try {
+        const { prompt } = req.body;
+        const response = await ai.models.generateContent({
+          //model: 'gemini-2.0-flash-001',
+          model: 'gemini-2.5-pro',
+          contents: prompt
+        });
+        res.json({ answer: response.text });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+})
 
 module.exports = router;
