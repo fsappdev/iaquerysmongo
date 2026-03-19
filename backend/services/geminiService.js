@@ -1,4 +1,4 @@
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+
 const { GoogleGenAI } = require('@google/genai');
 //apagar ⬇️
 const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
@@ -26,9 +26,8 @@ class GeminiService {
         "expectedResult": "..."
         }
     `;
-    //const result = await this.models.generateContent(prompt);
-    //const result = await this.models.generateContent({model: "gemini-2.5-pro", contents: prompt});
-    const result = await this.genAI.models.generateContent({model: "gemini-2.5-pro", contents: prompt});
+    //const result = await this.genAI.models.generateContent({model: "gemini-2.5-pro", contents: prompt});
+    const result = await this.genAI.models.generateContent({model: "gemini-3-flash-preview", contents: prompt});
     //const response = await result;
     //const text = response.text;
     console.log("resultado 📽️ 📊 MQ ",result);
@@ -72,7 +71,8 @@ class GeminiService {
         "count": ...
         }
     `;
-    const result = await ai.models.generateContent({model: "gemini-2.5-pro", contents: prompt});
+    //const result = await ai.models.generateContent({model: "gemini-3-pro-preview", contents: prompt});
+    const result = await this.genAI.models.generateContent({model: "gemini-2.5-pro", contents: prompt});
     console.log("resultado FR 📽️ 📊 ",result);
     const response = await result.text;
     console.log("response 📽️ 📊 ",response);
