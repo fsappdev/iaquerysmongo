@@ -28,7 +28,7 @@ class GeminiService {
     `;
     //const result = await this.models.generateContent(prompt);
     //const result = await this.models.generateContent({model: "gemini-2.5-pro", contents: prompt});
-    const result = await this.genAI.models.generateContent({model: "gemini-2.5-pro", contents: prompt});
+    const result = await this.genAI.models.generateContent({model: "gemini-3-flash-preview", contents: prompt});
     //const response = await result;
     //const text = response.text;
     console.log("resultado 📽️ 📊 MQ ",result);
