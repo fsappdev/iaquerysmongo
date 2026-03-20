@@ -72,7 +72,8 @@ class GeminiService {
         "count": ...
         }
     `;
-    const result = await ai.models.generateContent({model: "gemini-2.5-pro", contents: prompt});
+    //const result = await ai.models.generateContent({model: "gemini-2.5-pro", contents: prompt});
+    const result = await ai.models.generateContent({model: "gemini-3-flash-preview", contents: prompt});
     console.log("resultado FR 📽️ 📊 ",result);
     const response = await result.text;
     console.log("response 📽️ 📊 ",response);
