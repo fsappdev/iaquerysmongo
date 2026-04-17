@@ -43,7 +43,7 @@ export default function ResponseDisplay({ response }) {
             )}
 
             {result.insights && (
-                <Alert icon={<IconBulb size={16} />} color="yellow" title="Insights" radius="md">
+                <Alert icon={<IconBulb size={16} />} color="yellow" title="Resultado del Análisis" radius="md">
                     {result.insights}
                 </Alert>
             )}
