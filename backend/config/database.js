@@ -8,7 +8,7 @@ class Database {
 
     async connect() {
         const uri = process.env.MONGODB_URI;
-        this.client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+        this.client = new MongoClient(uri);
         await this.client.connect();
         this.db = this.client.db(process.env.DB_NAME || 'empresa_db');
         console.log('Conectado a MongoDB Atlas');

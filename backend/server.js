@@ -15,9 +15,9 @@ app.use('/api', queryRoutes);
 const PORT = process.env.PORT || 4000;
 
 database.connect().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Servidor backend escuchando en puerto ${PORT}`);
-  });
+    app.listen(PORT, () => {
+        console.log(`Servidor backend escuchando en puerto ${PORT}`);
+    });
 }).catch(err => {
-  console.error('No se pudo conectar a la base de datos:', err);
+    console.error('No se pudo conectar a la base de datos:', err);
 });
