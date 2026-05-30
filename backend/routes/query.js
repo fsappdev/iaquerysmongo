@@ -11,18 +11,20 @@ router.post('/natural-query', async (req, res) => {
         if (!query) return res.status(400).json({ success: false, error: 'Consulta vacía' });
 
         const schema = await database.getCollectionsSchema();
-        //console.log("schema 😣 ",schema);
+        console.log("schema 😣 ",schema);
         const mongoQueryInfo = await geminiService.generateMongoQuery(query, schema);
-        //console.log("mongoQueryInfo 😣⚖️ ",mongoQueryInfo);
+        console.log("mongoQueryInfo 😣⚖️ ",mongoQueryInfo);
         const db = database.getDb();
         //console.log("db 😣 ",db);
         const collection = db.collection(mongoQueryInfo.mongoQuery.collection);
         console.log("collection 😣 ", collection);
 
         let result;
+        //**TODO:modificar las querys para incluir mejor el limit */
+        //-- Ejecutar la consulta MongoDB
         switch (mongoQueryInfo.mongoQuery.operation) {
             case 'find':
-                result = await collection.find(mongoQueryInfo.mongoQuery.query).limit(100).toArray();
+                result = await collection.find(mongoQueryInfo.mongoQuery.query).limit(5).toArray();
                 break;
             case 'count':
                 result = await collection.countDocuments(mongoQueryInfo.mongoQuery.query);
@@ -31,7 +33,7 @@ router.post('/natural-query', async (req, res) => {
                 result = await collection.countDocuments(mongoQueryInfo.mongoQuery.query);
                 break;
             case 'aggregate':
-                result = await collection.aggregate(mongoQueryInfo.mongoQuery.query).limit(100).toArray();
+                result = await collection.aggregate(mongoQueryInfo.mongoQuery.query).limit(5).toArray();j
                 break;
             default:
                 throw new Error('Operación no soportada');
