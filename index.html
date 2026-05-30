@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de Animaciones CSS</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 50px;
+            padding-top: 50px;
+        }
+
+        /* ========================================= */
+        /* EJEMPLO DE TRANSICIÓN (INTERACTIVO) */
+        /* ========================================= */
+        .boton-transicion {
+            background-color: #3498db; /* Azul inicial */
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            /* Definimos la transición: cambiará el color y la sombra en 0.4 segundos con suavidad */
+            transition: background-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .boton-transicion:hover {
+            background-color: #e74c3c; /* Rojo al pasar el ratón */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Añade una sombra más pronunciada */
+        }
+
+        /* ========================================= */
+        /* EJEMPLO DE ANIMACIÓN (@keyframes - AUTOMÁTICO) */
+        /* ========================================= */
+        @keyframes latido {
+            0% {
+                transform: scale(1); /* Tamaño normal al inicio */
+                background-color: #2ecc71; /* Verde inicial */
+            }
+            50% {
+                transform: scale(1.1); /* Crece un 10% en el medio */
+                background-color: #f39c12; /* Naranja en el medio */
+            }
+            100% {
+                transform: scale(1); /* Vuelve al tamaño normal al final */
+                background-color: #2ecc71; /* Verde al final */
+            }
+        }
+
+        .elemento-animado {
+            width: 150px;
+            height: 150px;
+            background-color: #2ecc71;
+            border-radius: 50%; /* Lo hacemos un círculo */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            /* Aplicamos la animación: nombre | duración | repeticiones | timing-function */
+            animation: latido 2s infinite alternate ease-in-out;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h2>1. Transición (Interactivo)</h2>
+    <p>Pasa el ratón sobre este botón para ver la transición suave.</p>
+    <button class="boton-transicion">Pasa por aquí</button>
+
+    <hr style="width: 80%; margin: 30px 0;">
+
+    <h2>2. Animación (Automático)</h2>
+    <p>Este círculo late automáticamente sin necesidad de interacción.</p>
+    <div class="elemento-animado">LATEO</div>
+
+</body>
+</html>
